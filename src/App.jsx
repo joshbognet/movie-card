@@ -27,28 +27,33 @@ export default function App() {
   };
 
   const downloadJPEG = async () => {
-    const dataUrl = await toJpeg(ref.current, {
-      quality: 1,
-      pixelRatio: 3,
-      backgroundColor: "#F2EFE9",
-    });
+  const dataUrl = await toJpeg(ref.current, {
+    quality: 1,
+    pixelRatio: 3,
+    backgroundColor: "#F2EFE9",
+  });
 
-    const link = document.createElement("a");
-    link.download = "movie-card.jpeg";
-    link.href = dataUrl;
-    link.click();
-  };
+  const link = document.createElement("a");
+  link.download = "movie-card.jpeg";
+  link.href = dataUrl;
+  link.click();
+};
 
   const downloadPDF = async () => {
     const dataUrl = await toJpeg(ref.current, {
-      quality: 1,
-      pixelRatio: 3,
-    });
+    quality: 1,
+    pixelRatio: 3,
+    backgroundColor: "#F2EFE9",
+  });
 
-    const pdf = new jsPDF({ unit: "px", format: [600, 750] });
-    pdf.addImage(dataUrl, "JPEG", 0, 0, 600, 750);
-    pdf.save("movie-card.pdf");
-  };
+  const pdf = new jsPDF({
+    unit: "px",
+    format: [600, 750],
+  });
+
+  pdf.addImage(dataUrl, "JPEG", 0, 0, 600, 750);
+  pdf.save("movie-card.pdf");
+};
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
