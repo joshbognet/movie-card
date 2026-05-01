@@ -7,12 +7,7 @@ export default function App() {
   const [title, setTitle] = useState("FRESH");
 
   const downloadJPEG = async () => {
-    const dataUrl = await toJpeg(ref.current, {
-      quality: 1,
-      pixelRatio: 3,
-      backgroundColor: "#F2EFE9",
-    });
-
+    const dataUrl = await toJpeg(ref.current, { quality: 1, pixelRatio: 2 });
     const link = document.createElement("a");
     link.download = "movie-card.jpeg";
     link.href = dataUrl;
@@ -20,41 +15,114 @@ export default function App() {
   };
 
   const downloadPDF = async () => {
-    const dataUrl = await toJpeg(ref.current, {
-      quality: 1,
-      pixelRatio: 3,
-      backgroundColor: "#F2EFE9",
-    });
-
-    const pdf = new jsPDF({
-      unit: "px",
-      format: [600, 750],
-    });
-
+    const dataUrl = await toJpeg(ref.current, { quality: 1, pixelRatio: 2 });
+    const pdf = new jsPDF({ unit: "px", format: [600, 750] });
     pdf.addImage(dataUrl, "JPEG", 0, 0, 600, 750);
     pdf.save("movie-card.pdf");
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{
+      minHeight: "100vh",
+      background: "#ddd",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20
+    }}>
+      
       <div
         ref={ref}
         style={{
           width: 600,
           height: 750,
           background: "#F2EFE9",
-          padding: 20,
+          display: "flex",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
         }}
       >
-        <h1 style={{ color: "#8B2E16", fontSize: 60 }}>{title}</h1>
-        <p>Clean working version (we'll style again after build works)</p>
-        <img src="/logo1.png" width="80" />
+        
+        {/* LEFT FILM STRIP */}
+        <div style={{
+          width: 220,
+          borderLeft: "8px solid black",
+          borderRight: "8px solid black",
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+          padding: 10
+        }}>
+          {[0,1,2].map(i => (
+            <div key={i} style={{
+              flex: 1,
+              border: "4px solid black",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 12
+            }}>
+              Upload
+            </div>
+          ))}
+        </div>
+
+        {/* RIGHT CONTENT */}
+        <div style={{ flex: 1, padding: 20 }}>
+          
+          <div style={{
+            fontSize: 12,
+            letterSpacing: 2
+          }}>
+            MOVIE OVERVIEW
+          </div>
+
+          <input
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
+            style={{
+              fontSize: 60,
+              fontWeight: "bold",
+              color: "#8B2E16",
+              border: "none",
+              outline: "none",
+              background: "transparent",
+              width: "100%"
+            }}
+          />
+
+          <div style={{ fontSize: 14, marginTop: 10 }}>
+            2022 • THRILLER / HORROR • 114 MIN
+          </div>
+
+          <div style={{ marginTop: 20 }}>
+            <b style={{ color: "#8B2E16" }}>HOOK LINE</b>
+            <p style={{ fontSize: 14 }}>
+              What starts as a promising connection quickly turns into a nightmare.
+            </p>
+          </div>
+
+          <div style={{ marginTop: 20 }}>
+            <b style={{ color: "#8B2E16" }}>STORY PREVIEW</b>
+            <p style={{ fontSize: 14 }}>
+              After quitting dating apps, Noa meets Steve, a charming man who seems different.
+            </p>
+          </div>
+
+        </div>
       </div>
 
-      <div style={{ marginTop: 20 }}>
+      {/* BUTTONS */}
+      <div style={{
+        position: "fixed",
+        bottom: 20,
+        display: "flex",
+        gap: 10
+      }}>
         <button onClick={downloadJPEG}>JPEG</button>
         <button onClick={downloadPDF}>PDF</button>
       </div>
+
     </div>
   );
 }
+  
