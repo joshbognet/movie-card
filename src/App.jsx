@@ -48,7 +48,7 @@ export default function App() {
       >
         <h1 style={{ color: "#8B2E16", fontSize: 60 }}>{title}</h1>
         <p>Clean working version (we'll style again after build works)</p>
-        <img src="/logo.png" width="80" />
+        <img src="/logo1.png" width="80" />
       </div>
 
       <div style={{ marginTop: 20 }}>
